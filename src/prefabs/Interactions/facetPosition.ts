@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Scene, Vector3, Color3, Mesh, Matrix, MeshBuilder, StandardMaterial, Material, ActionManager, ExecuteCodeAction, SixDofDragBehavior, Color4, AxisScaleGizmo, ScaleGizmo, UtilityLayerRenderer, BoundingInfo, AbstractMesh, GizmoAnchorPoint, TransformNode, Space, PointerDragBehavior, AttachToBoxBehavior, FollowBehavior, Tags } from '@babylonjs/core';
+import { Scene, Vector3, Color3, Mesh, Matrix, MeshBuilder, StandardMaterial, Material, ActionManager, ExecuteCodeAction, SixDofDragBehavior, Color4, AxisScaleGizmo, ScaleGizmo, UtilityLayerRenderer, BoundingInfo, AbstractMesh, GizmoAnchorPoint, TransformNode, Space, PointerDragBehavior, AttachToBoxBehavior, FollowBehavior, Tags, Behavior } from '@babylonjs/core';
 import { bind, Selection, create } from '../../index';
+import { Observable } from 'ol';
 
 
 interface positionUIOptions {
@@ -48,6 +49,7 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
         behavior = new SixDofDragBehavior();
         behavior.faceCameraOnDragStart = true;
         behavior.rotateAroundYOnly = true;
+       
       } else {
         behavior = options.behavior;
       }
@@ -61,6 +63,8 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
     boundingMesh.billboardMode = (billboard) ? 2 : 0;
 
     let boundingSelection = new Selection([boundingMesh], this.scene);
+    
+    let observable: Observable;
 
     let grab = boundingSelection.bind("capsule", {height: width, radius: radius})
                     .name(name)
@@ -72,13 +76,16 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
                       ActionManager.OnPickDownTrigger,
                       () => {
                         //(billboard) ? boundingMesh.billboardMode = 0 : null;
-                         node.addBehavior(behavior);
+                          node.addBehavior(behavior);
+                          behavior.onDragObservable.add((event) => {
+                          let distance = event.pickInfo.distance;
+                          (node as TransformNode).position.z += event.delta.z * (Math.log(distance))
+                        })
                       }
                     ))
                     .action((d,n,i) => new ExecuteCodeAction( 
                       ActionManager.OnPickOutTrigger,
                       () => {
-                        //(billboard) ? boundingMesh.billboardMode = 2 : null;
                         node.removeBehavior(behavior);
                       }
                   ))
