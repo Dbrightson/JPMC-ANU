@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
 // Copyright : J.P. Morgan Chase & Co.
 
-import { Vector3, Color3, StandardMaterial, ActionManager, ExecuteCodeAction, SixDofDragBehavior, Color4, BoundingInfo, TransformNode, PointerDragBehavior, Tags, Quaternion, Space } from '@babylonjs/core';
-import { Selection, create } from '../../index';
+import { Scene, Vector3, Color3, Mesh, Matrix, MeshBuilder, StandardMaterial, Material, ActionManager, ExecuteCodeAction, SixDofDragBehavior, Color4, AxisScaleGizmo, ScaleGizmo, UtilityLayerRenderer, BoundingInfo, AbstractMesh, GizmoAnchorPoint, TransformNode, Space, PointerDragBehavior, AttachToBoxBehavior, FollowBehavior, Tags, Behavior } from '@babylonjs/core';
+import { bind, Selection, create } from '../../index';
+import { Observable } from 'ol';
 
 
 interface positionUIOptions {
@@ -48,7 +49,7 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
         behavior = new SixDofDragBehavior();
         behavior.faceCameraOnDragStart = true;
         behavior.rotateAroundYOnly = true;
-        behavior.zDragFactor = 100;
+       
       } else {
         behavior = options.behavior;
       }
@@ -63,6 +64,8 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
     boundingMesh.billboardMode = (billboard) ? 2 : 0;
 
     let boundingSelection = new Selection([boundingMesh], this.scene);
+    
+    let observable: Observable;
 
     let grab = boundingSelection.bind("capsule", {height: width, radius: radius})
                     .name(name)
@@ -73,14 +76,18 @@ export function positionUI(this: Selection, options: positionUIOptions = {}): Se
                     .action((d,n,i) => new ExecuteCodeAction( 
                       ActionManager.OnPickDownTrigger,
                       () => {
-                        //(node  as TransformNode).rotationQuaternion = null;
-                         node.addBehavior(behavior);
+                        //(billboard) ? boundingMesh.billboardMode = 0 : null;
+                          node.addBehavior(behavior);
+                          behavior.onDragObservable.add((event) => {
+                          let distance = event.pickInfo.distance;
+                          (node as TransformNode).position.z += event.delta.z * (Math.log(distance))
+                        })
                       }
                     ))
+              
                     .action((d,n,i) => new ExecuteCodeAction( 
                       ActionManager.OnPickOutTrigger,
                       () => {
-                        //(node  as TransformNode).rotationQuaternion = null;
                         node.removeBehavior(behavior);
                       }
                   ))
