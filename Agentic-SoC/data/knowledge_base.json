@@ -1,0 +1,25 @@
+{
+  "185.220.101.50": {
+    "threat_actor": "APT28",
+    "campaign": "Operation Fancy Bear",
+    "malware_families": ["X-Agent", "Sofacy"],
+    "verdict": "malicious",
+    "confidence": 0.95,
+    "summary": "Known C2 node associated with APT28. Observed in recent phishing campaigns targeting government sectors."
+  },
+  "suspicious_user_agent": {
+    "threat_actor": "Unknown",
+    "campaign": "Generic Scanning",
+    "malware_families": [],
+    "verdict": "suspicious",
+    "confidence": 0.6,
+    "summary": "User agent string matches common vulnerability scanners (OpenVAS, Nessus) or script kiddie tools."
+  },
+  "10.0.100.25": {
+    "threat_actor": "Internal",
+    "campaign": "None",
+    "verdict": "benign",
+    "confidence": 0.9,
+    "summary": "Internal workstation subnet. No known compromise."
+  }
+}

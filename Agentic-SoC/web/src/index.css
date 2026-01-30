@@ -1,0 +1,360 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Rajdhani:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 222 47% 3%;
+  --foreground: 210 40% 98%;
+  --card: 222 47% 5%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222 47% 5%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 186 100% 50%;
+  --primary-foreground: 222 47% 3%;
+  --secondary: 217 33% 17%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217 33% 17%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 217 33% 17%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217 33% 17%;
+  --input: 217 33% 17%;
+  --ring: 186 100% 50%;
+  --radius: 0.25rem;
+  --success: 160 100% 50%;
+  --warning: 51 100% 50%;
+  
+  --chart-1: 186 100% 50%;
+  --chart-2: 160 100% 50%;
+  --chart-3: 0 84% 60%;
+  --chart-4: 51 100% 50%;
+  --chart-5: 280 65% 60%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background-color: #030712;
+  color: #F8FAFC;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* Scanline overlay effect */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.03) 0px,
+    rgba(0, 0, 0, 0.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6, .font-rajdhani {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Glow effects */
+.text-glow-cyan {
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.text-glow-red {
+  text-shadow: 0 0 10px rgba(255, 42, 42, 0.5), 0 0 20px rgba(255, 42, 42, 0.3);
+}
+
+.text-glow-green {
+  text-shadow: 0 0 10px rgba(0, 255, 157, 0.5), 0 0 20px rgba(0, 255, 157, 0.3);
+}
+
+.text-glow-yellow {
+  text-shadow: 0 0 10px rgba(255, 214, 0, 0.5), 0 0 20px rgba(255, 214, 0, 0.3);
+}
+
+.box-glow-cyan {
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.15), inset 0 0 20px rgba(0, 240, 255, 0.05);
+}
+
+.box-glow-red {
+  box-shadow: 0 0 20px rgba(255, 42, 42, 0.15), inset 0 0 20px rgba(255, 42, 42, 0.05);
+}
+
+/* Sci-Fi Card */
+.scifi-card {
+  background: rgba(11, 15, 26, 0.8);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.scifi-card:hover {
+  border-color: rgba(0, 240, 255, 0.5);
+  box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
+}
+
+/* Corner brackets */
+.scifi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-top: 2px solid rgba(0, 240, 255, 0.6);
+  border-left: 2px solid rgba(0, 240, 255, 0.6);
+}
+
+.scifi-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border-bottom: 2px solid rgba(0, 240, 255, 0.6);
+  border-right: 2px solid rgba(0, 240, 255, 0.6);
+}
+
+/* HoloButton */
+.holo-btn {
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.5);
+  color: #00F0FF;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.5rem 1.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.holo-btn:hover {
+  background: rgba(0, 240, 255, 0.2);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+}
+
+.holo-btn-danger {
+  background: rgba(255, 42, 42, 0.1);
+  border-color: rgba(255, 42, 42, 0.5);
+  color: #FF2A2A;
+}
+
+.holo-btn-danger:hover {
+  background: rgba(255, 42, 42, 0.2);
+  box-shadow: 0 0 15px rgba(255, 42, 42, 0.3);
+}
+
+/* Terminal Log */
+.terminal-log {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: #94A3B8;
+  background: rgba(0, 0, 0, 0.5);
+  border-left: 2px solid #00F0FF;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.terminal-log::-webkit-scrollbar {
+  width: 6px;
+}
+
+.terminal-log::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.terminal-log::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.3);
+  border-radius: 3px;
+}
+
+/* Status indicators */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse 2s infinite;
+}
+
+.status-dot.critical { background: #FF2A2A; }
+.status-dot.high { background: #FF6B35; }
+.status-dot.medium { background: #FFD600; }
+.status-dot.low { background: #00FF9D; }
+.status-dot.info { background: #00F0FF; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Progress bars */
+.progress-bar {
+  height: 4px;
+  background: rgba(0, 240, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00F0FF, #00FF9D);
+  transition: width 0.5s ease;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(11, 15, 26, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.5);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease forwards;
+}
+
+/* Grid background */
+.grid-bg {
+  background-image: 
+    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Nav active state */
+.nav-item-active {
+  background: rgba(0, 240, 255, 0.1);
+  border-left: 2px solid #00F0FF;
+}
+
+/* Table styles */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94A3B8;
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+.data-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(30, 41, 59, 0.5);
+}
+
+.data-table tr:hover {
+  background: rgba(0, 240, 255, 0.05);
+}
+
+/* Badge */
+.badge {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+}
+
+.badge-critical { background: rgba(255, 42, 42, 0.2); color: #FF2A2A; border: 1px solid rgba(255, 42, 42, 0.5); }
+.badge-high { background: rgba(255, 107, 53, 0.2); color: #FF6B35; border: 1px solid rgba(255, 107, 53, 0.5); }
+.badge-medium { background: rgba(255, 214, 0, 0.2); color: #FFD600; border: 1px solid rgba(255, 214, 0, 0.5); }
+.badge-low { background: rgba(0, 255, 157, 0.2); color: #00FF9D; border: 1px solid rgba(0, 255, 157, 0.5); }
+.badge-info { background: rgba(0, 240, 255, 0.2); color: #00F0FF; border: 1px solid rgba(0, 240, 255, 0.5); }
+
+/* Metric card */
+.metric-value {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+/* Icon glow */
+.icon-glow {
+  filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.5));
+}
+
+.icon-glow-red {
+  filter: drop-shadow(0 0 5px rgba(255, 42, 42, 0.5));
+}
+
+/* Shadcn overrides for dark sci-fi theme */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer base {
+  [data-debug-wrapper="true"] {
+    display: contents !important;
+  }
+}
